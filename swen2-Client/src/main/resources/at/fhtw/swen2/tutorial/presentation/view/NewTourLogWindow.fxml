@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="at.fhtw.swen2.tutorial.presentation.view.NewTourLogWindow"
+            prefHeight="400.0" prefWidth="600.0">
+    <children>
+        <Label fx:id="NewTourWindowTitleLabel" layoutX="14.0" layoutY="14.0" prefHeight="23.0" prefWidth="292.0" text="New Tour" textAlignment="CENTER">
+        </Label>
+        <Label layoutX="14.0" layoutY="98.0" prefHeight="17.0" prefWidth="78.0" text="Date:" />
+        <TextField fx:id="dateLogTextField" layoutX="98.0" layoutY="94.0" prefHeight="25.0" prefWidth="203.0" />
+        <Label layoutX="14.0" layoutY="140.0" prefHeight="17.0" prefWidth="78.0" text="Comment:" />
+        <TextField fx:id="commentLogTextField" layoutX="98.0" layoutY="136.0" prefHeight="25.0" prefWidth="203.0" />
+        <Label layoutX="14.0" layoutY="182.0" prefHeight="17.0" prefWidth="78.0" text="Difficulty:" />
+        <TextField fx:id="difficultyLogTextField" layoutX="98.0" layoutY="178.0" prefHeight="25.0" prefWidth="203.0" />
+        <Label layoutX="14.0" layoutY="224.0" prefHeight="17.0" prefWidth="78.0" text="Total Time:" />
+        <TextField fx:id="totalTimeLogTextField" layoutX="98.0" layoutY="220.0" prefHeight="25.0" prefWidth="203.0" />
+        <Label layoutX="14.0" layoutY="266.0" prefHeight="17.0" prefWidth="78.0" text="Rating:" />
+        <TextField fx:id="ratingLogTextField" layoutX="98.0" layoutY="262.0" prefHeight="25.0" prefWidth="203.0" />
+        <Button fx:id="submitTourLogButton" layoutX="119.0" layoutY="300.0" onAction="#submitTourLogButtonAction" mnemonicParsing="false" text="Submit" />
+    </children>
+</AnchorPane>

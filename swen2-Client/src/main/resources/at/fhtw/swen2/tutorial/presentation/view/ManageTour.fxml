@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="200.0" prefWidth="200.0" spacing="8.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fhtw.swen2.tutorial.presentation.view.TourManageView">
+
+
+   <children>
+      <Label text="%tab.demo.title">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Separator prefWidth="200.0" />
+      <Text text="Tours" />
+      <GridPane>
+        <columnConstraints>
+          <ColumnConstraints hgrow="never" maxWidth="87.0" minWidth="25.0" prefWidth="28.0" />
+            <ColumnConstraints hgrow="never" maxWidth="87.0" minWidth="20.0" prefWidth="28.0" />
+          <ColumnConstraints hgrow="never" maxWidth="133.0" minWidth="20.0" prefWidth="107.0" />
+            <ColumnConstraints hgrow="never" maxWidth="133.0" minWidth="35.0" prefWidth="50.0" />
+            <ColumnConstraints hgrow="never" maxWidth="133.0" minWidth="50.0" prefWidth="50.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button mnemonicParsing="false" fx:id="addTour" onAction="#addTourAction" text="+" GridPane.columnIndex="0"/>
+            <Button mnemonicParsing="false" fx:id="deleteTour" onAction="#delTourAction" text="-" GridPane.columnIndex="1" />
+            <Button mnemonicParsing="false" fx:id="editTour" onAction="#editTourAction" text="edit" GridPane.columnIndex="2" />
+             <Button mnemonicParsing="false" fx:id="singlePdf" onAction="#singlePdfAction" text="pdf" GridPane.columnIndex="3"/>
+             <Button mnemonicParsing="false" fx:id="summaryPdf" onAction="#summaryPdfAction" text="pdfAll" GridPane.columnIndex="4"/>
+         </children>
+      </GridPane>
+      <!--<TextField fx:id="nameTextField" />
+      <Button fx:id="submitButton" onAction="#submitButtonAction" text="insert" />
+      <Separator prefWidth="200.0" />
+      <Text fx:id="feedbackText" />-->
+   </children>
+   <padding>
+      <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+   </padding>
+</VBox>
