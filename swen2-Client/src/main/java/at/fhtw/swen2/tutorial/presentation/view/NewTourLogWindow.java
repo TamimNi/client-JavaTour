@@ -53,18 +53,19 @@ public class NewTourLogWindow implements Initializable {
     private boolean editLog = false;
     @Override
     public void initialize(URL location, ResourceBundle rb) {
-        //dateLogTextField.textProperty().bindBidirectional(newTourWindowViewModel.dateLogProperty(), new StringConverter<Date>() {
 
+        dateLogTextField.textProperty().bindBidirectional(newTourLogWindowViewModel.dateLogProperty());
         commentLogTextField.textProperty().bindBidirectional(newTourLogWindowViewModel.commentLogProperty());
         difficultyLogTextField.textProperty().bindBidirectional(newTourLogWindowViewModel.difficultyLogProperty());
         totalTimeLogTextField.textProperty().bindBidirectional(newTourLogWindowViewModel.totalTimeLogProperty(), new NumberStringConverter());
         ratingLogTextField.textProperty().bindBidirectional(newTourLogWindowViewModel.ratingLogProperty(), new NumberStringConverter());
+
         if(tourLogListViewModel.getSelectedTour() != null){
             System.out.println("tour selected (edit)");
             NewTourWindowTitleLabel.setText("Edit Tour");
             editLog = true;
             TourLog tourLog = tourLogListViewModel.getSelectedTour();
-            dateLogTextField.setText(String.valueOf(tourLog.getDateLog()));
+            dateLogTextField.setText(tourLog.getDateLog());
             commentLogTextField.setText(tourLog.getCommentLog());
             difficultyLogTextField.setText(tourLog.getDifficultyLog());
             totalTimeLogTextField.setText(String.valueOf(tourLog.getTotalTimeLog()));
@@ -82,18 +83,7 @@ public class NewTourLogWindow implements Initializable {
 
     }
 
-    public void show() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("NewTourLogWindow.fxml"));
 
-            Parent root = loader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     @Autowired
     TourListViewModel tourListViewModel;
     public void submitTourLogButtonAction(ActionEvent actionEvent) throws IOException {

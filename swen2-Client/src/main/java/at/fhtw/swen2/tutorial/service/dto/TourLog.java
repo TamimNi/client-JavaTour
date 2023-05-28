@@ -13,7 +13,7 @@ import java.util.Date;
 public class TourLog {
     private Long idLog;
     private Long tourId;
-    private Date dateLog;
+    private String dateLog;
     private String commentLog;
     private String difficultyLog;
     private Long totalTimeLog;

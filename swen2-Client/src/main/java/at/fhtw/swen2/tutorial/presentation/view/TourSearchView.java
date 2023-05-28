@@ -46,6 +46,7 @@ public class TourSearchView {
     }
 
     private void loadData() {
+        toursearchViewModel.setSearchString(searchField.getText());
         toursearchViewModel.search();
     }
 }

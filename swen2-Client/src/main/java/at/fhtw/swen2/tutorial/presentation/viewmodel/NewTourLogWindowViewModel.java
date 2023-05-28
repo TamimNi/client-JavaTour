@@ -13,7 +13,7 @@ import java.io.IOException;
 public class NewTourLogWindowViewModel {
     private SimpleLongProperty idLogProperty = new SimpleLongProperty();
     private SimpleLongProperty tourIDProperty = new SimpleLongProperty();
-   // private SimpleObjectProperty<Date> dateLogProperty = new SimpleObjectProperty<>();
+    private SimpleStringProperty dateLogProperty = new SimpleStringProperty();
     private SimpleStringProperty commentLogProperty = new SimpleStringProperty();
     private SimpleStringProperty difficultyLogProperty = new SimpleStringProperty();
     private SimpleLongProperty totalTimeLogProperty = new SimpleLongProperty();
@@ -27,7 +27,7 @@ public class NewTourLogWindowViewModel {
 
     public SimpleLongProperty idLogProperty() { return idLogProperty; }
     public SimpleLongProperty tourIDProperty() { return tourIDProperty; }
-    //public SimpleObjectProperty<Date> dateLogProperty() { return dateLogProperty; }
+    public SimpleStringProperty dateLogProperty() { return dateLogProperty; }
     public SimpleStringProperty commentLogProperty() { return commentLogProperty; }
     public SimpleStringProperty difficultyLogProperty() { return difficultyLogProperty; }
     public SimpleLongProperty totalTimeLogProperty() { return totalTimeLogProperty; }
@@ -44,13 +44,13 @@ public class NewTourLogWindowViewModel {
         TourLog tourLog = TourLog.builder()
                 .tourId(tourListViewModel.getSelectedTour().getId())
                 .idLog(idLogProperty.get())
-                .dateLog(null)
+                .dateLog(dateLogProperty.get())
                 .commentLog(commentLogProperty.get())
                 .difficultyLog(difficultyLogProperty.get())
                 .totalTimeLog(totalTimeLogProperty.get())
                 .ratingLog(ratingLogProperty.get())
                 .build();
-
+        System.out.println("Date izz "+dateLogProperty.get());
         //tourLog = tourLogService.addNew(tourLog);
 
         tourLogListViewModel.addItem((TourLog) toServer.postReq("/api/tourLog", tourLog));
