@@ -12,6 +12,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -40,6 +42,8 @@ public class NewTourWindow implements Initializable {
     public Label NewTourWindowTitleLabel;
     @Autowired
     private NewTourWindowViewModel testViewModel;
+
+    private static final Logger logger = LogManager.getLogger(NewTourWindow.class);
     @Override
     public void initialize(URL location, ResourceBundle rb) {
         nameTextField.textProperty().bindBidirectional(testViewModel.nameProperty());
@@ -73,9 +77,10 @@ public class NewTourWindow implements Initializable {
 
            if (tourListViewModel.getSelectedTour() == null) {
                testViewModel.addTest();
+               logger.debug("new");
            } else {
                testViewModel.editTest();
-               System.out.println("EDIT CALLED IN TestView");
+               logger.debug("edit");
            }
            Stage stage = (Stage) nameTextField.getScene().getWindow();
            stage.close();

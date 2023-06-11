@@ -12,6 +12,8 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -40,6 +42,8 @@ public class TourListView implements Initializable {
 
     @Autowired
     private ViewManager viewManager;
+
+    private static final Logger logger = LogManager.getLogger(TourListView.class);
     @Override
     public void initialize(URL location, ResourceBundle rb) {
         tableView.setItems(tourListViewModel.getTourListItemsListItems());
@@ -83,7 +87,7 @@ public class TourListView implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("items " + tourListViewModel.getTourListItemsListItems());
+        logger.debug("items " + tourListViewModel.getTourListItemsListItems());
     }
 
 }

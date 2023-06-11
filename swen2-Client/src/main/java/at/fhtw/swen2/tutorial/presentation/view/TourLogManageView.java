@@ -27,8 +27,7 @@ public class TourLogManageView implements Initializable {
     public Button darkMode;
     //  @Autowired
    // private TourLogService tourLogService;
-    @Autowired
-    private SearchView searchView;
+
 
     //  @FXML
     //  private Text feedbackText;

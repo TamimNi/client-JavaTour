@@ -19,12 +19,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 @Component
 @Scope("prototype")
 public class ImageView implements Initializable {
     @FXML
     public javafx.scene.image.ImageView mapView;
+    private static final Logger logger = LogManager.getLogger(ImageView.class);
 
     @Override
     public void initialize(URL location, ResourceBundle rb) {
@@ -39,8 +41,9 @@ public class ImageView implements Initializable {
             Tour tour = tourListViewModel.getSelectedTour();
             if(tour != null) {
                 mapView.setImage(mapQuestImage.getImage(tour.getFrom(), tour.getTo()));
+                logger.debug("showImage has been called");
             }else{
-                System.out.println("no Tour selected");
+                logger.info("info logger message");
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

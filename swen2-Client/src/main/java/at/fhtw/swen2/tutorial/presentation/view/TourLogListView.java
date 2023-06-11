@@ -9,6 +9,8 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -27,7 +29,7 @@ public class TourLogListView implements Initializable {
     public TableView tableView = new TableView<>();
     @FXML
     private VBox dataContainer;
-
+    private static final Logger logger = LogManager.getLogger(TourLogListView.class);
     @Override
     public void initialize(URL location, ResourceBundle rb){
         tableView.setItems(tourLogListViewModel.getTourLogListItems());
@@ -53,10 +55,9 @@ public class TourLogListView implements Initializable {
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 1 && !row.isEmpty()) {
                     TourLog rowItem = row.getItem();
-                    System.out.println("clicked but not saved ->"+rowItem+"<-");
+                    logger.debug("clicked but not saved ->"+rowItem+"<-");
                     // do something with the tour object
                    tourLogListViewModel.selectRow(rowItem);
-                    System.out.println("chekc out "+tourLogListViewModel.getSelectedTour());
 
                 }
 

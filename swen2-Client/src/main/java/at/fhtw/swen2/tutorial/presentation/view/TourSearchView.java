@@ -1,6 +1,5 @@
 package at.fhtw.swen2.tutorial.presentation.view;
 
-import at.fhtw.swen2.tutorial.presentation.viewmodel.SearchViewModel;
 import at.fhtw.swen2.tutorial.presentation.viewmodel.TourSearchViewModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

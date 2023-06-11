@@ -4,6 +4,8 @@ import at.fhtw.swen2.tutorial.service.dto.Tour;
 import at.fhtw.swen2.tutorial.toServer.ToServer;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +24,7 @@ public class NewTourWindowViewModel {
     @Autowired
     ToServer toServer;
 
+    private static final Logger logger = LogManager.getLogger(NewTourWindowViewModel.class);
     public StringProperty nameProperty() { return name; }
     public StringProperty tourDescriptionProperty() { return tourDescription; }
     public StringProperty fromProperty() { return from; }
@@ -34,6 +37,7 @@ public class NewTourWindowViewModel {
         tour = toServer.putReq("/api/tour", tour);
         tourListViewModel.delItem(tourListViewModel.getSelectedTour(),false);
         tourListViewModel.addItem((tour));
+        logger.debug("editing tourlog");
     }
 
     public void addTest() throws IOException {
@@ -41,5 +45,6 @@ public class NewTourWindowViewModel {
                 .transportType(transportType.get()).tourDistance(12L)
                 .estimatedTime(11L).from(from.get()).to(to.get()).build();
         tourListViewModel.addItem((Tour) toServer.postReq("/api/tour", tour));
+        logger.debug("adding tourlog");
     }
 }

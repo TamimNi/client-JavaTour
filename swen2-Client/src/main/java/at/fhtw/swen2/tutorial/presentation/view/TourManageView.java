@@ -10,6 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -43,6 +45,7 @@ public class TourManageView implements Initializable {
     @Autowired
     TourManageViewModel tourManageViewModel;
 
+    private static final Logger logger = LogManager.getLogger(TourManageView.class);
     @Override
     public void initialize(URL location, ResourceBundle rb) {
     }
@@ -53,6 +56,7 @@ public class TourManageView implements Initializable {
             Parent root1 = viewManager.load("at/fhtw/swen2/tutorial/presentation/view/NewTourWindow.fxml", stage);
             stage.setScene(new Scene(root1));
             stage.show();
+            logger.debug("add tour");
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -65,17 +69,20 @@ public class TourManageView implements Initializable {
         if(tourListViewModel.getSelectedTour() != null){
         String url = tourManageViewModel.singlePdf(tourListViewModel.getSelectedTour().getId());
             openUpFile(url);
+            logger.debug("single pdf");
         }
     }
 
     public void summaryPdfAction(ActionEvent actionEvent) throws IOException {
         String url = tourManageViewModel.summaryPdf();
         openUpFile(url);
+        logger.debug("pdf summary");
     }
 
     //UNIQUE FEATURE OPENS FILE IN WEBBROWSER VIA URL
     private void openUpFile(String url){
-
+        logger.debug("open file");
+        logger.info("url "+url);
         String os = System.getProperty("os.name").toLowerCase();
         Runtime rt = Runtime.getRuntime();
 

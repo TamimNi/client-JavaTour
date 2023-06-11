@@ -1,6 +1,9 @@
 package at.fhtw.swen2.tutorial.toServer;
 
+import at.fhtw.swen2.tutorial.presentation.view.ImageView;
 import javafx.scene.image.Image;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -17,9 +20,11 @@ public class MapQuestImage {
 
     private static String filename = "map2.png";
 
+    private static final Logger logger = LogManager.getLogger(MapQuestImage.class);
     public Image getImage(String start, String end) throws IOException {
         byte[] imageBytes = getImageBytes(start, end);
         Image image = null;
+        logger.debug("getting image");
         try {
             ByteArrayInputStream bis = new ByteArrayInputStream(imageBytes);
             image = new Image(bis);
@@ -37,8 +42,9 @@ public class MapQuestImage {
                 .url(url)
                 .build();
 
+        logger.debug("getting image bytes");
         try (Response response = client.newCall(request).execute()) {
-            System.out.println("response "+response);
+            logger.info("response "+response);
             return response.body().bytes();
         }
     }

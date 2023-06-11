@@ -1,9 +1,12 @@
 package at.fhtw.swen2.tutorial.presentation.viewmodel;
 
+import at.fhtw.swen2.tutorial.presentation.view.TourManageView;
 import at.fhtw.swen2.tutorial.service.dto.TourLog;
 import at.fhtw.swen2.tutorial.toServer.ToServer;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -38,6 +41,8 @@ public class NewTourLogWindowViewModel {
     private TourLogListViewModel tourLogListViewModel;
     @Autowired
     ToServer toServer;
+
+    private static final Logger logger = LogManager.getLogger(NewTourLogWindowViewModel.class);
     public void createTourLog() throws IOException {
        // Here you would implement the logic to create a new tour
         // using the provided tour name and location.
@@ -50,7 +55,7 @@ public class NewTourLogWindowViewModel {
                 .totalTimeLog(totalTimeLogProperty.get())
                 .ratingLog(ratingLogProperty.get())
                 .build();
-        System.out.println("Date izz "+dateLogProperty.get());
+        logger.debug("create tourlog");
         //tourLog = tourLogService.addNew(tourLog);
 
         tourLogListViewModel.addItem((TourLog) toServer.postReq("/api/tourLog", tourLog));
@@ -73,5 +78,6 @@ public class NewTourLogWindowViewModel {
         //tourLog = tourLogService.updOld(tourLog);
         toServer.putReq("/api/putlog",tourLog);
         tourLogListViewModel.addItem(tourLog);
+        logger.debug("edit tourlog");
     }
 }

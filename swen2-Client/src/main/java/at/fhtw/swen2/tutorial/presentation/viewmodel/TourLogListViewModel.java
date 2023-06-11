@@ -6,6 +6,8 @@ import at.fhtw.swen2.tutorial.toServer.ToServer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
@@ -26,9 +28,11 @@ public class TourLogListViewModel {
         return tourLogListItems;
     }
 
+    private static final Logger logger = LogManager.getLogger(TourLogListViewModel.class);
     public void addItem(TourLog tourLog) {
         tourLogListItems.add(tourLog);
         masterData.add(tourLog);
+        logger.debug("adding tourlog item");
     }
 
     public void delItem(TourLog tourLog) {
@@ -36,16 +40,18 @@ public class TourLogListViewModel {
         tourLogListItems.removeIf(t -> t.getIdLog().equals(tourLog.getIdLog()));
         masterData.removeIf(t -> t.getIdLog().equals(tourLog.getIdLog()));
         selectedTour = null;
+        logger.debug("deleting tourlog item");
     }
     public void delItemByTourId(Long id) {
         //tourListItems.remove(test);
         tourLogListItems.removeIf(t -> t.getTourId().equals(id));
         masterData.removeIf(t -> t.getTourId().equals(id));
         selectedTour = null;
+        logger.debug("del tourlog");
     }
 
     public void removeLogsOfTheTour(Long tourId) {
-        System.out.println("ITTTEMS\n\n\n\n" + tourLogListItems + "\n\n\n.................");
+       // System.out.println("ITTTEMS\n\n\n\n" + tourLogListItems + "\n\n\n.................");
         //tourLogListItems.removeIf(t -> t.getTest().getId().equals(tourId));
         // masterData.removeIf(t -> t.getTest().getId().equals(tourId));
         selectedTour = null;
@@ -72,13 +78,15 @@ public class TourLogListViewModel {
 
     public void selectRow(TourLog tourLog) {
         this.selectedTour = tourLog;
-        System.out.println(selectedTour);
+
+        logger.info("selected ->"+selectedTour);
         // create and show the notification box
     }
 
     public void deleteRow() throws IOException {
         if (selectedTour != null) {
-            System.out.println("del");
+
+            logger.debug("del tourlog row");
 
             toServer.deleteReq("/api/dellog", selectedTour.getIdLog());
             delItem(selectedTour);
@@ -89,14 +97,16 @@ public class TourLogListViewModel {
             //   delItem(tourLog);
             //    System.out.println("thNAME "+tourLog+ "this name: ." +tourLog);
         } else
-            System.out.println("no select");
+
+            logger.debug("no select");
     }
 
     @Autowired
     ToServer toServer;
 
     public void getLogList(String tourId) throws IOException {
-        System.out.println("yes");
+
+        logger.debug("get tourlog list");
         // tourLogService.getTourLogList().forEach(p -> {
         //    addItem(p);
         // });
@@ -110,6 +120,8 @@ public class TourLogListViewModel {
     }
 
     public void filterList(String searchText) {
+
+        logger.debug("filter tourlog");
         Task<List<TourLog>> task = new Task<>() {
             @Override
             protected List<TourLog> call() throws Exception {

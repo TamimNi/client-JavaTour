@@ -1,5 +1,8 @@
 package at.fhtw.swen2.tutorial.toServer;
 
+import at.fhtw.swen2.tutorial.presentation.view.ImageView;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -16,9 +19,11 @@ public class ToServer {
 
     String serverUrl = "http://localhost:8080";
 
+    private static final Logger logger = LogManager.getLogger(ToServer.class);
     public <T> T postReq(String dataEndpoint, T data) throws IOException {
         RestTemplate restTemplate = new RestTemplate();
 
+        logger.debug("post request");
         try {
             ResponseEntity<T> response = restTemplate.postForEntity(serverUrl + dataEndpoint, data, (Class<T>) data.getClass());
             if (response.getStatusCode() == HttpStatus.OK) {
@@ -35,6 +40,7 @@ public class ToServer {
     public <T> T putReq(String dataEndpoint,  T data) throws IOException {
         RestTemplate restTemplate = new RestTemplate();
 
+        logger.debug("put request");
         try {
             HttpEntity<T> request = new HttpEntity<>(data);
             ResponseEntity<T> response = restTemplate.exchange(serverUrl + dataEndpoint, HttpMethod.PUT, request, (Class<T>) data.getClass());
@@ -54,6 +60,8 @@ public class ToServer {
 
     public <T> T getReq(String endpoint, ParameterizedTypeReference<T> responseType) throws IOException {
         RestTemplate restTemplate = new RestTemplate();
+
+        logger.debug("get request");
         try {
             ResponseEntity<T> response = restTemplate.exchange(
                     serverUrl + endpoint,
@@ -62,11 +70,11 @@ public class ToServer {
                     responseType
             );
             if (response.getStatusCode() == HttpStatus.OK) {
-                System.out.println("Data retrieved successfully");
-                System.out.println("this->" + response);
+
+                logger.debug("data retrieved ->"+response);
                 return response.getBody();
             } else {
-                System.out.println("Error retrieving data");
+                logger.error("error retrieving data");
             }
         } catch (HttpClientErrorException e) {
             System.out.println("Error communicating with server"+e);

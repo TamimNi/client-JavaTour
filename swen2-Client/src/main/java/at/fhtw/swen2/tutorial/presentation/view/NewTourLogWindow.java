@@ -16,6 +16,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -51,6 +53,8 @@ public class NewTourLogWindow implements Initializable {
     @Autowired
     private TourLogListViewModel tourLogListViewModel;
     private boolean editLog = false;
+
+    private static final Logger logger = LogManager.getLogger(NewTourLogWindow.class);
     @Override
     public void initialize(URL location, ResourceBundle rb) {
 
@@ -61,7 +65,7 @@ public class NewTourLogWindow implements Initializable {
         ratingLogTextField.textProperty().bindBidirectional(newTourLogWindowViewModel.ratingLogProperty(), new NumberStringConverter());
 
         if(tourLogListViewModel.getSelectedTour() != null){
-            System.out.println("tour selected (edit)");
+            logger.info("edit tourlog");
             NewTourWindowTitleLabel.setText("Edit Tour");
             editLog = true;
             TourLog tourLog = tourLogListViewModel.getSelectedTour();
@@ -71,7 +75,7 @@ public class NewTourLogWindow implements Initializable {
             totalTimeLogTextField.setText(String.valueOf(tourLog.getTotalTimeLog()));
             ratingLogTextField.setText(String.valueOf(tourLog.getRatingLog()));
         }else{
-            System.out.println("no tour selected (no edit)");
+            logger.info("new tourlog");
             NewTourWindowTitleLabel.setText("New Tour");
             editLog = false;
             dateLogTextField.setText("");
@@ -95,7 +99,6 @@ public class NewTourLogWindow implements Initializable {
                 newTourLogWindowViewModel.createTourLog();
             } else {
                 newTourLogWindowViewModel.editTest();
-                System.out.println("EDIT CALLED IN TestView");
             }
             Stage stage = (Stage) submitTourLogButton.getScene().getWindow();
             stage.close();
@@ -115,8 +118,9 @@ public class NewTourLogWindow implements Initializable {
                     && Long.parseLong(totalTimeLogTextField.getText()) < 10000000
                     && Long.parseLong(ratingLogTextField.getText()) > 0
                     && Long.parseLong(ratingLogTextField.getText()) < 10;
+
         }else{
-            System.out.println("only numbers accapted");
+            logger.info("only valid numbers accpeted");
         }
 
             // Enable/disable submit button based on validation result

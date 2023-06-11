@@ -6,6 +6,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.scene.control.Alert;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
@@ -25,10 +27,11 @@ public class TourListViewModel {
     public ObservableList<Tour> getTourListItemsListItems() {
         return tourListItems;
     }
-
+    private static final Logger logger = LogManager.getLogger(TourListViewModel.class);
     public void addItem(Tour tour) {
         tourListItems.add(tour);
         masterData.add(tour);
+        logger.debug("adding item");
     }
 
     @Autowired
@@ -41,6 +44,7 @@ public class TourListViewModel {
         //  if(delLogs == true){tourLogListViewModel.removeLogsOfTheTour(test.getId());}
         tourLogListViewModel.delItemByTourId(tour.getId());
         resetSelectedTour();
+        logger.debug("deleting item");
     }
 
     public void clearItems() {
@@ -59,18 +63,18 @@ public class TourListViewModel {
 
     public void selectRow(Tour tour) {
         this.selectedTour = tour;
-        System.out.println(selectedTour);
         // create and show the notification box
+        logger.debug("select ->"+selectedTour);
     }
 
     public void deleteRow() throws IOException {
         if (selectedTour != null) {
-            System.out.println("del");
+            logger.debug("deleting row");
             toServer.deleteReq("/api/tour",selectedTour.getId());
             delItem(selectedTour, true);
             this.selectedTour = null;
         } else
-            System.out.println("no select");
+            logger.info("nothing selected");
     }
 
     @Autowired
@@ -90,7 +94,7 @@ public class TourListViewModel {
             @Override
             protected List<Tour> call() throws Exception {
                 updateMessage("Loading data");
-                System.out.println("still->"+searchText);
+                logger.debug("filter list");
                 return masterData
                         .stream()
                         .filter(value -> {
